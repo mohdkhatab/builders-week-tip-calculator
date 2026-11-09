@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tip Calculator - MLH Builders Week</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0; display:flex; justify-content:center; padding:2rem; }
+  .card { background:#1e293b; padding:2rem; border-radius:1rem; max-width:420px; width:100%; }
+  label { display:block; margin-top:1rem; font-size:.9rem; }
+  input { width:100%; padding:.6rem; margin-top:.3rem; border-radius:.5rem; border:1px solid #334155; background:#0f172a; color:#e2e8f0; box-sizing:border-box; }
+  .row { display:flex; justify-content:space-between; margin-top:1rem; font-size:1.05rem; }
+  .total { font-weight:700; color:#38bdf8; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Tip Calculator</h1>
+  <p>A mini app built during MLH Global Hack Week: Builders Week.</p>
+  <label>Bill amount (₹)
+    <input id="bill" type="number" min="0" value="1000">
+  </label>
+  <label>Tip percent (%)
+    <input id="tip" type="number" min="0" value="10">
+  </label>
+  <label>People splitting
+    <input id="people" type="number" min="1" value="1">
+  </label>
+  <div class="row"><span>Tip:</span><span id="tipOut">₹100.00</span></div>
+  <div class="row total"><span>Total:</span><span id="totalOut">₹1100.00</span></div>
+  <div class="row"><span>Per person:</span><span id="perOut">₹1100.00</span></div>
+</div>
+<script>
+  const bill = document.getElementById('bill'), tip = document.getElementById('tip'), people = document.getElementById('people');
+  function update() {
+    const b = Math.max(0, parseFloat(bill.value) || 0);
+    const t = Math.max(0, parseFloat(tip.value) || 0);
+    const p = Math.max(1, parseInt(people.value) || 1);
+    const tipAmt = b * t / 100, total = b + tipAmt;
+    document.getElementById('tipOut').textContent = '₹' + tipAmt.toFixed(2);
+    document.getElementById('totalOut').textContent = '₹' + total.toFixed(2);
+    document.getElementById('perOut').textContent = '₹' + (total / p).toFixed(2);
+  }
+  [bill, tip, people].forEach(el => el.addEventListener('input', update));
+  update();
+</script>
+</body>
+</html>
